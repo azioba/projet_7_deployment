@@ -7,6 +7,7 @@ import requests
 import shap
 import json
 import plotly.graph_objects as go
+import matplotlib.pyplot as plt
 import seaborn as sns
 
 st.set_page_config(
@@ -38,8 +39,9 @@ def explain_model_prediction_shap(data):
     return p, shap_values 
 
 def bivariate_analysis(feat1, feat_2,data):
-    p = sns.scatterplot(data=data, x=data[feat1], y=data[feat_2], hue='Score', style='Customer',
-                             markers=["o"], marker="X",color='red', s=100)
+    st.subheader('Bivariate Analysis')
+    p = sns.scatterplot(data=data, x=data[feat1], y=data[feat_2], hue='TARGET',
+                             color='red', s=100)
     return p
  
 def plot_gauge(current_value, threshold):
@@ -125,6 +127,6 @@ def process():
                 #data_chart = df.groupby("TARGET")[[selected_feature_1,selected_feature_2]].value_counts().unstack(level=0)
                 #st.bar_chart(data_chart)
                 p = bivariate_analysis(selected_feature_1, selected_feature_2, df)
-                st.write(p)
+                st.pyplot()
 if __name__=='__main__':
     process() 
