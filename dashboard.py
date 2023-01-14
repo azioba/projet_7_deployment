@@ -1,15 +1,13 @@
 import numpy as np 
 import pandas as pd 
 
-from sklearn.model_selection import train_test_split
-
 import streamlit as st 
 import pickle
 import requests
 import shap
 import json
-import lime
-import lime.lime_tabular
+import plotly.graph_objects as go
+import seaborn as sns
 
 st.set_page_config(
     page_title="Modèle de Scoring",
@@ -39,23 +37,21 @@ def explain_model_prediction_shap(data):
     p = shap.plots.bar(shap_values)
     return p, shap_values 
 
-# explain model prediction Lime results
-def explain_model_prediction_lime(data, client):
-    explaine_ = lime.lime_tabular.LimeTabularExplainer(
-        data,
-        feature_names=feature_names,
-        class_names=['no_risk','risked'],
-        mode = 'classification')
-    
-    instance = data.iloc[client]
-    explanation = explainer_.explain_instance(
-    instance,
-    classifier.predict_proba,
-    num_features=10,
-    top_labels=1 )
-    
-    return explanation
-    
+def bivariate_analysis(feat1, feat_2,data):
+    p = sns.scatterplot(data=data, x=data[feat1], y=data[feat_2], hue='Score', style='Customer',
+                             markers=["o"], marker="X",color='red', s=100)
+    return p
+ 
+def plot_gauge(current_value, threshold):
+    fig = go.Figure(go.Indicator(
+    mode = "gauge+number",
+    value = current_value,
+    title = {"text": "Current Value / Threshold Value"},
+    gauge = {'axis': {'range': [0, 1]},
+             'bar': {'color': "green"},
+             'threshold': {'line': {'color': "red", 'width': 4}, 'thickness': 0.75, 'value': threshold}
+            }))
+    return fig
     
 # get the data of the selected customer
 def get_value(index):
@@ -81,7 +77,7 @@ def best_classification(probas, threshold, X):
     y_pred = 1 if probas > threshold else 0 
     return y_pred
 
-def main():
+def process():
     
     URI = 'http://127.0.0.1:5000/predict'
      
@@ -106,9 +102,11 @@ def main():
             else:
                 risk_assessment = "Crédit accepté"
             st.sidebar.success(risk_assessment)
-            st.sidebar.write("Prediction: ", int(score))
             st.sidebar.write("Probability: ", round(float(prob),4))
-            st.sidebar.write("y_pred best threshold: ", y_pred)
+            st.sidebar.write(" best threshold: ", 0.3918)      
+            st.subheader('Probability Gauge')
+            gauge = plot_gauge(prob, 0.3918)  
+            st.plotly_chart(gauge)
             st.subheader('Result Interpretability - Applicant Level')
             p, shap_values = explain_model_prediction_shap(data) 
             st.pyplot(p)
@@ -119,15 +117,14 @@ def main():
             st.pyplot(shap.summary_plot(shap.TreeExplainer(classifier).shap_values((X)), X, plot_type="bar"))
             
             
-            explanation = explain_model_prediction_lime(df, Customer)
-            explanation.show_in_notebook(show_all=False)
     
     
-    select = st.sidebar.checkbox('Features')
-    if select:
-            selected_feature = st.sidebar.selectbox('Selectionner une feature', feature_names)
-            if st.sidebar.button('display'):
-                st.bar_chart(df.groupby("TARGET").selected_feature.value_counts())
-            
+    selected_feature_1 = st.sidebar.selectbox('Feature 1', feature_names)
+    selected_feature_2 = st.sidebar.selectbox('Feature 2', feature_names)
+    if st.sidebar.button('display'):
+                #data_chart = df.groupby("TARGET")[[selected_feature_1,selected_feature_2]].value_counts().unstack(level=0)
+                #st.bar_chart(data_chart)
+                p = bivariate_analysis(selected_feature_1, selected_feature_2, df)
+                st.write(p)
 if __name__=='__main__':
-    main() 
+    process() 

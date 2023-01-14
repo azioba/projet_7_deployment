@@ -1,16 +1,14 @@
 from flask import Flask, request, jsonify
-#import requests
+import requests
 import pandas as pd
 import numpy as np
 import pickle
-import shap
 import json
 
 app = Flask(__name__)
 
 pickle_in=open('classifier.pkl','rb')
 classifier = pickle.load(pickle_in)
-explainer = shap.TreeExplainer(classifier)
 
 # scoring
 def score_record(data, classifier):
