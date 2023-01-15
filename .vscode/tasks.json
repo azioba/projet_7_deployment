@@ -19,7 +19,7 @@
 				"docker-build"
 			],
 			"python": {
-				"file": "dashboard.py"
+				"file": "Frontend\\dashboard.py"
 			}
 		}
 	]
