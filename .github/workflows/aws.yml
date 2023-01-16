@@ -20,7 +20,7 @@ jobs:
       with:
         context: .
         push: true
-        tags: ${{ env.REGISTRY_URL }}/backend:${{ env.TAG }} ${{ env.REGISTRY_URL }}/frontend:${{ env.TAG }}
+        tags: my-registry-url/backend:${{ env.TAG }} my-registry-url/frontend:${{ env.TAG }}
 
     - name: Deploy to EC2
       uses: aws-actions/ec2-deploy-action@v1
@@ -36,6 +36,6 @@ jobs:
           #!/bin/bash
           echo "Running user-data script"
           echo "Starting backend container"
-          docker run -d -p 5000:5000 ${{ env.REGISTRY_URL }}/backend:${{ env.TAG }}
+          docker run -d -p 5000:5000 my-registry-url/backend:${{ env.TAG }}
           echo "Starting frontend container"
-          docker run -d -p 8501:8501 ${{ env.REGISTRY_URL }}/frontend:${{ env.TAG }}
+          docker run -d -p 8501:8501 my-registry-url/frontend:${{ env.TAG }}

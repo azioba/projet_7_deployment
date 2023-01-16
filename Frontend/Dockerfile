@@ -8,14 +8,14 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 # Install pip requirements
-COPY requirements.txt .
+COPY Frontend/requirements.txt .
 RUN python -m pip install -r requirements.txt
 
 WORKDIR /app
-COPY . /app
+COPY Frontend/ .
 
 # Expose port
 EXPOSE 8501
 
 # During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
-CMD ["streamlit", "run", "Frontend\dashboard.py"]
+CMD ["streamlit", "run", "dashboard.py"]
