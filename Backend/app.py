@@ -4,6 +4,7 @@ import numpy as np
 import pickle
 import json
 
+
 app = Flask(__name__)
 
 pickle_in=open('classifier.pkl','rb')
