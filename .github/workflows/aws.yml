@@ -25,7 +25,7 @@ jobs:
     - name: Deploy to EC2
       uses: aws-actions/ec2-deploy-action@v1
       with:
-        region: us-west-2
+        region: eu-west-3
         instance-type: t2.micro
         ami-id: ami-0f65671a86f061fcd
         key-name: my-key
