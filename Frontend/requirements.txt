@@ -15,4 +15,4 @@ scikit-image==0.19.3
 scikit-learn==1.0
 streamlit==1.10.0
 shap==0.41.0
-seaborn
+seaborn==0.12.2
