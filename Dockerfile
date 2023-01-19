@@ -13,11 +13,11 @@ ENV PYTHONUNBUFFERED=1
 
 
 # Install pip requirements
-COPY Backend/requirements.txt .
+COPY requirements.txt .
 RUN python -m pip install -r requirements.txt
 
 WORKDIR /app
-COPY Backend/ .
+COPY . /app
 
 # Expose port
 EXPOSE 5000
