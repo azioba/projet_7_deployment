@@ -8,6 +8,10 @@ ENV PYTHONDONTWRITEBYTECODE=1
 # Turns off buffering for easier container logging
 ENV PYTHONUNBUFFERED=1
 
+# prevents running sudo commands
+# RUN useradd -r -s /bin/bash cazio
+
+
 # Install pip requirements
 COPY Backend/requirements.txt .
 RUN python -m pip install -r requirements.txt

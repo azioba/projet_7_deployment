@@ -15,6 +15,9 @@ def score_record(data, classifier):
 
     return classifier.predict(data)[0], classifier.predict_proba(data)[:,1][0]
 
+@app.route('/')
+def hello_world():
+    return 'Hello world! How are you?'
     
 @app.route('/predict', methods=['GET','POST'])
 def predict_score():
@@ -35,4 +38,4 @@ def predict_score():
 
 
 if __name__=='__main__':
-    app.run()
+    app.run(host='0.0.0.0')
