@@ -82,6 +82,7 @@ def best_classification(probas, threshold, X):
 def process():
     
     URI = 'http://127.0.0.1:5000/predict'
+    #URI = 'http://0.0.0.0:5000/predict'
      
     st.title("Loan Default Prediction")
     html_temp = """
