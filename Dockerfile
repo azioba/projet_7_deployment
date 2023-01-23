@@ -10,9 +10,6 @@ ENV PYTHONUNBUFFERED=1
 
 #RUN apt-get update && apt-get install -y libgomp1
 
-# prevents running sudo commands
-# RUN useradd -r -s /bin/bash cazio
-
 
 # Install pip requirements
 COPY backend/requirements.txt .
@@ -26,5 +23,3 @@ EXPOSE 5000
 
 # During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
 CMD ["python", "application.py"]
-#CMD ["flask", "run", "--host", "0.0.0.0"]
-#CMD exec gunicorn --bind 0.0.0.0:5000 --workers=4 --timeout 0 app:app
