@@ -19,12 +19,12 @@ COPY backend/requirements.txt .
 RUN python -m pip install -r requirements.txt
 
 WORKDIR /app
-COPY backend/app.py backend/classifier.pkl ./
+COPY backend/application.py backend/classifier.pkl ./
 
 # Expose port
 EXPOSE 5000
 
 # During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
-#CMD gunicorn --workers=4 --bind 0.0.0.0:5000 app:app
+CMD ["python", "application.py"]
 #CMD ["flask", "run", "--host", "0.0.0.0"]
-CMD exec gunicorn --bind 0.0.0.0:5000 --workers=4 --timeout 0 app:app
+#CMD exec gunicorn --bind 0.0.0.0:5000 --workers=4 --timeout 0 app:app

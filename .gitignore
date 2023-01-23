@@ -75,7 +75,7 @@ docs/_build/
 target/
 
 # Jupyter Notebook
-.ipynb_checkpoints
+.ipynb_checkpoints/
 
 # IPython
 profile_default/
@@ -129,4 +129,4 @@ dmypy.json
 .pyre/
 
 # Other files
-P_7.ipynb
+P_7.ipynb/
