@@ -18,7 +18,7 @@ jobs:
         lfs: 'true'
     - 
       name: Build the Docker image
-      run: docker build -t flask-api -f Dockerfile .
+      run: docker build -t flask-api -f Dockerfile . 
     -
       name: Generate Deployment Package
       run: zip -r deploy.zip *
@@ -36,6 +36,14 @@ jobs:
         replace-with: '-'
         flags: 'g'
 
+
+  deploy:
+
+    runs-on: ubuntu-latest
+    needs  : [build]
+
+    steps:
+    
     - name: Deploy to EB
       uses: einaregilsson/beanstalk-deploy@v14
       with:
