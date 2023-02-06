@@ -16,7 +16,7 @@ st.set_page_config(
 )
 st.set_option('deprecation.showPyplotGlobalUse', False)
 st.write("""
-         par *MAHAMADOU HAMIDOU Abdoul Aziz*
+         (c) 2023, MAHAMADOU HAMIDOU Abdoul Aziz
          """)
 
 df = pd.read_csv('df_500.csv',index_col='SK_ID_CURR')
